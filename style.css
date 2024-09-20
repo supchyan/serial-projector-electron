@@ -1,0 +1,115 @@
+:root {
+    --darker-col: #001C17;
+    --bg-col: #003A30;
+    --text-col: #00CDAA;
+}
+@font-face {
+    font-family: "mononoki";
+    src: url("./mononoki.ttf");
+}
+::placeholder {
+    color: var(--text-col);
+    opacity: 0.3;
+}
+textarea:focus, input:focus{
+    outline: none;
+}
+body {
+    width: 100vw;
+    height: 100vh;
+
+    padding: 0;
+    margin: 0;
+
+    top: 0;
+    left: 0;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--bg-col);
+    
+    color: var(--text-col);
+    font-family: "mononoki";
+
+    user-select: none;
+
+    overflow: hidden;
+}
+
+#data_container {
+    font-size: 6em;
+}
+
+#port_btn {
+    margin-top: 1em;
+
+    cursor: pointer;
+    filter: none;
+
+    transition: 220ms;
+}
+
+#port_btn:hover {
+    filter: invert();
+}
+
+#baud_rate_input {
+    border: 0;
+    border-radius: 0.5em;
+    
+    background-color: var(--darker-col);
+    box-shadow: none;
+
+    padding: 1em;
+    margin-top: 2em;
+
+    font-family: "mononoki";
+    color: var(--text-col);
+
+    text-align: center;
+
+    scale: 1;
+
+    transition: 220ms;
+}
+
+#baud_rate_input:focus {
+    scale: 1.2;
+}
+
+#toast_container {
+    right: 0em;
+    bottom: 0em;
+
+    padding: 0;
+
+    margin: 0;
+
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    
+    width: 30vw;
+    height: 100vh;
+
+    background-color: none;
+}
+#toast {
+    margin: 0.1em;
+    padding: 1em;
+    
+    width: auto;
+    height: auto;
+
+    border-radius: 0.5em;
+
+    background-color: var(--darker-col);
+    color: var(--text-col);
+}
+
