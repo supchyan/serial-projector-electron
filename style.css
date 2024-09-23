@@ -58,7 +58,7 @@ body {
     filter: invert();
 }
 
-#baud_rate_input {
+.inputs {
     border: 0;
     border-radius: 0.5em;
     
@@ -78,7 +78,7 @@ body {
     transition: 220ms;
 }
 
-#baud_rate_input:focus {
+.inputs:focus {
     scale: 1.2;
 }
 

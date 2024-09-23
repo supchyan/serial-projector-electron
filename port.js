@@ -14,41 +14,65 @@ function readPort(serialport) {
     });
 }
 
-function openPort(baudRate) {
+SerialPort.list().then((ports) => {
+    console.log(ports);
+});
+
+function openPort(baudRate, portPath) {
     SerialPort.list().then((ports) => {
         if (ports.length == 0) return sendToast("Existing ports hasn't been detected.");
 
         if(serialport && serialport.isOpen) {
             port_btn.innerText = 'Open port';
             return serialport.close((e) => {
-                sendToast(e == null ? `Port [${ports[0].path}] has been closed.` : e);
+                sendToast(e == null ? `Port [${portPath}] has been closed.` : e);
             });
         }
         
         ports.forEach((port, i) => {
-            if (i == 0) {
-                sendToast(`Openning ${port.path}...`);
+            if (port.path == portPath) {
+                sendToast(`Openning ${portPath}...`);
                 
                 serialport = new SerialPort({
-                    path: port.path,
+                    path: portPath,
                     baudRate: baudRate,
                     autoOpen: false
                 });
 
-                serialport.open((e) => sendToast(e == null ? `Done! Listening port: [${port.path}]` : e));
+                serialport.open((e) => sendToast(e == null ? `Done! Listening port: [${portPath}]` : e));
 
                 return readPort(serialport);
             }
         });
+
+        return sendToast(`Chosen port hasn't been detected.`);
     });
 }
 
 const baud_rate_input = document.getElementById('baud_rate_input');
+const port_path_input = document.getElementById('port_path_input');
 const port_btn = document.getElementById('port_btn');
 
+baud_rate_input.addEventListener("keydown", (event) => {
+    if(event.key == 'Enter') {
+        parseBaudInput();
+    }
+});
+port_path_input.addEventListener("keydown", (event) => {
+    if(event.key == 'Enter') {
+        parseBaudInput();
+    }
+});
 port_btn.onclick = () => {
+    parseBaudInput();
+};
+
+function parseBaudInput() {
     if (baud_rate_input.value == '') {
         return sendToast('You have to set baud rate.');
     }
-    openPort( parseInt(baud_rate_input.value, 10) );
-};
+    if (port_path_input.value == '') {
+        return sendToast('You have to set port path. (COM1 / COM2 / etc.)');
+    }
+    openPort( parseInt(baud_rate_input.value, 10), port_path_input.value );
+}
